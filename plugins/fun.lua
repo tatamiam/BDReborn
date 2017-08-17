@@ -69,15 +69,15 @@ local function get_weather(location)
 	local temp = 'دمای شهر '..city..' هم اکنون '..weather.main.temp..' درجه سانتی گراد می باشد\n____________________'
 	local conditions = 'شرایط فعلی آب و هوا : '
 	if weather.weather[1].main == 'Clear' then
-		conditions = conditions .. 'آفتابی☀'
+		conditions = conditions .. 'آفتابی'
 	elseif weather.weather[1].main == 'Clouds' then
-		conditions = conditions .. 'ابری ☁☁'
+		conditions = conditions .. 'ابری '
 	elseif weather.weather[1].main == 'Rain' then
-		conditions = conditions .. 'بارانی ☔'
+		conditions = conditions .. 'بارانی '
 	elseif weather.weather[1].main == 'Thunderstorm' then
-		conditions = conditions .. 'طوفانی ☔☔☔☔'
+		conditions = conditions .. 'طوفانی '
 	elseif weather.weather[1].main == 'Mist' then
-		conditions = conditions .. 'مه 💨'
+		conditions = conditions .. 'مه '
 	end
 	return temp .. '\n' .. conditions
 end
@@ -150,6 +150,7 @@ local Clang = redis:get(Chash)
 		text = text..'\nغروب آفتاب: '..data.Sunset
 		text = text..'\nاذان مغرب: '..data.Maghrib
 		text = text..'\nعشاء : '..data.Isha
+		text = text..'\n@SecPlus'
 		text = text..msg_caption
 		return tdcli.sendMessage(msg.chat_id_, 0, 1, text, 1, 'html')
 	end
@@ -259,7 +260,7 @@ end
 		local data = json:decode(bitly)
 		local u2s = http.request('http://u2s.ir/?api=1&return_text=1&url='..URL.escape(shortlink))
 		local llink = http.request('http://llink.ir/yourls-api.php?signature=a13360d6d8&action=shorturl&url='..URL.escape(shortlink)..'&format=simple')
-		local text = ' 🌐لینک اصلی :\n'..check_markdown(data.data.long_url)..'\n\nلینکهای کوتاه شده با 6 سایت کوتاه ساز لینک : \n》کوتاه شده با bitly :\n___________________________\n'..(check_markdown(data.data.url) or '---')..'\n___________________________\n》کوتاه شده با u2s :\n'..(check_markdown(u2s) or '---')..'\n___________________________\n》کوتاه شده با llink : \n'..(check_markdown(llink) or '---')..'\n___________________________\n》لینک کوتاه شده با yon : \nyon.ir/'..(check_markdown(jdat.output) or '---')..'\n____________________'..msg_caption
+		local text = ' لینک اصلی :\n'..check_markdown(data.data.long_url)..'\n\nلینکهای کوتاه شده با 6 سایت کوتاه ساز لینک : \n》کوتاه شده با bitly :\n___________________________\n'..(check_markdown(data.data.url) or '---')..'\n___________________________\n》کوتاه شده با u2s :\n'..(check_markdown(u2s) or '---')..'\n___________________________\n》کوتاه شده با llink : \n'..(check_markdown(llink) or '---')..'\n___________________________\n》لینک کوتاه شده با yon : \nyon.ir/'..(check_markdown(jdat.output) or '---')..'\n____________________'..msg_caption
 		return tdcli.sendMessage(msg.chat_id_, 0, 1, text, 1, 'html')
 	end
 --------------------------------
